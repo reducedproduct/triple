@@ -1,0 +1,87 @@
+\documentclass[12pt]{amsart}
+\begin{document}
+\section{Parametrizing The triple  reduced product}
+Let
+$$X=
+\begin{pmatrix}
+ia &r=p+iq&u+iv\cr
+-p+iq&ib&x+iy\cr
+-u+iv&-x+iy&ic\cr
+\end{pmatrix}$$
+in $\mathfrak{su}(3)$ represent a point in the triple reduced product ${\mathcal E}$.
+
+The $4$-dim variety ${\mathcal M}$ is defined by relating the $9$~real variables
+$a$, $b$, $c$, $p$, $q$, $u$, $v$, $x$, $y$ by equations $(5)-(8)$ of the paper
+together with the condition $a+b+c=0$.
+
+As described in the paper, we do our calculations in the transversal $v=0$, $y=x$.
+
+We parametrize the transversal using $|r|^2$ and~$c$.
+The first goal is use the equations to write $a$, $b$, $p$, $q$, $u$, $x$ in terms of our
+chosen parameters.
+
+For a $3\times 3$ matrix~$M$, define $\tau_2(M)$ to be the coefficient of $z$ in
+$\det(M-z I)$, that is, the linear term in the characteristic polynomial.
+In the expression $-\tau_2(-X-i\mu)+\tau_2(X)$ the quadratic terms cancel so equation~(5)
+becomes a linear function of $a$, $b$, $c$.
+Solving the simultaneous equations \{(5), $a+b+c=0$\} gives $a$ and $b$ as linear functions
+of~$c$, denoted in the code as ``arule'' and ``brule''.
+
+Equations (6), (7), (8) in the paper become $eqn1=0$, $eqn2=0$, $eqn3=0$ in the code.
+
+Replacing $p^2$ by $|r|^2-q^2$ eliminates all occurrences of $p$, $q$ from equations eqn1
+and~eqn3 which can now be regarded as linear simultaneous equations in the variables $u^2$
+and~$x^2$.
+Solving these gives $u^2$ and $x^2$ as functions of $a$, $b$, $c$, $|r|^2$ and replacing
+$a$ and $b$ gives ``uurule'' and ``xxrule'' for writing $u^2$ and $x^2$ in terms of our
+parameters $|r|^2$ and~$c$.
+
+Replacing $p^2 = |r|^2-q^2$ and $ux = \sqrt{uurule\ xxrule}$ in eqn2 and replacing $a$, $b$
+using arule, brule, gives $p+q$ as a function of the parameters $|r|^2$ and ~$c$.
+Together with the equation $p^2+q^2=|r|^2$ this determines two curves giving $p$ and $q$
+in terms of $|r|^2$ and~$c$, which are interchanged under the involution $p\leftrightarrow q$,
+as described in Lemma~2.3.
+We pick one solution curve and do our integrals over that, doubling the answer to get
+the actual period.
+
+
+\section{The symplectic form}
+The next goal is to find a usable formula for the symplectic form.
+In the paper, a function $V(~)$ taking values in the tangent space~$T_X{\mathcal M}$ is
+defined.
+Formula~(25) for the symplectic form gives a simple formula for the value $\Omega(Z,Y)$,
+but only in the case where one of $Y$, $Z$ is given in the form $V(e)$.
+
+We pick a candidate function which we wish to test as being a possible Hamiltonian for some
+circle action on~$\mathcal E$.
+In this file we are testing the average Gelfand-Cetlin function,
+$H:=\bigl(GC(X)+GC(-X-i\mu)\bigr)/2$.
+
+
+Starting with a random choice of matrices $e_1$, $e_2$ in $\mathfrak{su}(3)$, by comparing
+directional derivatives $D_{V(e_1)}H$, $D_{V(e_2)}H$ we find a linear combination~$e$ of
+$e_1$ and~$e_2$ such that $D_{V(e)}H=0$.
+Because we are in two dimensions, if $H$ is indeed the Hamiltonian for a circle action, 
+then $V(e)$ will be a scalar multiple of the Hamiltonian vector field~$X_H$, denoted $\chi$
+in the code.
+
+Since we are in two dimensions, the symplectic form is completely determined by knowledge
+of $\Omega (Z,Y)$ for any pair of linearly independent tangent vectors $Z$, $Y$.
+
+Writing all the entries of $X$ in terms of $|r|^2$ and $c$ we form the matrix of
+partial derivatives with respect to $c$, which gives a tangent vector $T_c$.
+Using equation~(25) we evaluate $\hat{\Omega}:=\Omega\bigl(T_c,V(e)\bigr)$.
+We are now ready to use linear algebra to evaluate $\Omega(Z,Y)$ for arbitrary $Z$ and~$Y$
+by writing $Z$ and~$Y$ in the $T_c, V(e)$ basis.
+At this point we could get an expression for $F(r,c)$ to write the symplectic form as
+$\Omega = F(r,c)\,d|r|^2\wedge dc$ and go on to calculate the symplectic volume.
+
+Comparing $\hat{\Omega}$ with the value $\Omega(\chi,T_c)$ coming from the definition
+of a Hamiltonian now allows us to compute $\chi_H$ as in Section~3.5 of the paper.
+
+We find it convenient to sometimes use the formula for $H$ in terms of $|r|^2$ and~$c$
+(which is quartic in $|r|^2$) and switch to parameters $H$ and~$c$.
+Writing $\chi_H$ in terms of $H$ and~$c$ we evaluate the $\tau_z$ described in Section~3.5
+and obtain the table of values appearing in the paper.
+
+\end{document}

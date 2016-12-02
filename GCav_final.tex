@@ -1,0 +1,542 @@
+%% AMS-LaTeX Created with the Wolfram Language : www.wolfram.com
+
+\documentclass{article}
+\usepackage{amsmath, amssymb, graphics, setspace}
+
+\newcommand{\mathsym}[1]{{}}
+\newcommand{\unicode}[1]{{}}
+
+\newcounter{mathematicapage}
+\begin{document}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{This} \text{allows} \text{us} \text{to} \text{explicitly} \text{state} \text{our} \text{assumptions} \text{about}
+\text{variables} \text{making} \text{ComplexExpand} \text{fully} }\\
+\pmb{\text{simplify} \text{on} \text{variables} \text{we} \text{assume} \text{are} \text{real} \text{*)}}\\
+\pmb{\text{$\$$Assumptions}=\{\};}\\
+\pmb{\text{Assume}[\text{assumptions$\_$}]\text{:=}\text{$\$$Assumptions}=\text{DeleteDuplicates}@\text{Flatten}@\text{Append}[\text{$\$$Assumptions},\text{assumptions}]}\\
+\pmb{\text{Assume}[\{p,q,u,v,x,y,a,b,c\}\in \text{Reals}];}\)
+\end{doublespace}
+
+\section*{Notation Conventions}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{  }2.1 \text{The} \text{Variable} X \text{is} a \text{member} \text{of} \text{the} \text{Lie} \text{algebra} \text{of}
+\text{su}(3), }\\
+\pmb{a \text{skew}-\text{hermitian} 3\times 3 \text{complex} \text{matrix} \text{with} \text{trace} \text{zero} \text{*)} }\\
+\pmb{X=\left(
+\begin{array}{ccc}
+ I a & r & s \\
+ -r* & I b & t \\
+ -s* & -t* & I c \\
+\end{array}
+\right);}\\
+\pmb{\text{(*}\text{  }\text{Variables} \{p,q,u,v,x,y,a,b,c\} \in  \text{Reals}\text{  }\text{*)}}\\
+\pmb{r=p + I q;}\\
+\pmb{s=u + I v;}\\
+\pmb{t=x + I y;}\\
+\pmb{}\\
+\pmb{\text{(*} r* \text{is} \text{complex} \text{conjugate} \text{of} r, \text{etc}.\text{  }\text{*)}}\\
+\pmb{X=X\text{//}\text{ComplexExpand};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{Differences} \text{used} \text{in} \text{the} \text{computation} \text{of} \text{of} \tilde{\beta } \text{function},
+\text{see} \text{eq}.9 \text{*)}}\\
+\pmb{\mu [1,2]=\mu [2]-\mu [1];}\\
+\pmb{\mu [1,3]=\mu [3]-\mu [1];}\\
+\pmb{\mu [2,3]=\mu [3]-\mu [2];}\)
+\end{doublespace}
+
+\section*{Symplectic Form and Hamiltonian Vector Field}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{$\S $3}.1 \text{Euclidean} \text{Inner} \text{Product} \text{of} \text{tangent} \text{vectors} \text{to} \text{su}(3)}\\
+\pmb{\text{     }\text{thought} \text{of} \text{as} \text{matrices} \text{in} \text{su}(3) \text{*)}}\\
+\pmb{\text{IP}[\text{A$\_$},\text{B$\_$}]\text{:=}-\text{Tr}[A.B];}\\
+\pmb{}\\
+\pmb{\text{(*} \text{$\S $3}.1 \text{Commutator}, \text{denoted} [A,B] \text{*)}}\\
+\pmb{\text{Comm}[\text{A$\_$},\text{B$\_$}]\text{:=}A.B-B.A}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{$\S $3}.2: \text{e1} \text{and} \text{e2} \text{are} \text{two} \text{arbitrary} \text{elements} \text{in} \text{su}(3)
+}\\
+\pmb{\text{chosen} \text{to} \text{create} a \text{basis} \text{for} \text{our} \text{variety} \mathcal{M} \text{*)}}\\
+\pmb{\text{e1} = \text{SparseArray}[\{\{1,2\}\to r,\{2,1\}\text{-$>$}-r*\},\{3,3\}]\text{//}\text{Simplify};}\\
+\pmb{\text{e2} = \text{SparseArray}[\{\{1,3\}\to s,\{3,1\}\text{-$>$}-s*\},\{3,3\}]\text{//}\text{Simplify};}\\
+\pmb{}\\
+\pmb{\text{(*} \text{We} \text{wish} \text{to} \text{find} \beta (e) \text{satisfying} [X,e] = [\text{I$\mu $},\beta (e)], e \in  \text{su}(3) \text{*)}}\\
+\pmb{}\\
+\pmb{\text{(*} \text{$\S $3}.1 \text{eq}.19: \text{To} \text{achieve} \text{this} \text{we} \text{define} \tilde{\beta }\text{  }\text{*)}}\\
+\pmb{\tilde{\beta }[\text{e$\_$}]\text{:=}}\\
+\pmb{-\{\{0, -I e[[1,2]]/\mu [1,2], -I e[[1,3]]/\mu [1,3]\},\{I e[[2,1]]/\mu [1,2],0, -I e[[2,3]]/\mu [2,3]\},}\\
+\pmb{\{I e[[3,1]]/\mu [1,3], I e[[3,2]]/\mu [2,3],0\}\}\text{//}\text{ComplexExpand}}\\
+\pmb{}\\
+\pmb{\text{(*} \text{$\S $3}.1 \text{eq}.20: \tilde{\beta } \text{allows} \text{us} \text{to} \text{define} \text{the} \text{desired} \text{vector}
+\text{field} \beta (e) \text{*)}}\\
+\pmb{\beta [\text{e$\_$}]\text{:=}\tilde{\beta }[\text{Comm}[X,e]]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\alpha [\text{e$\_$}]\text{:=}-e-\beta [e]}\\
+\pmb{\text{(* $\S $3.1 eq.20 *)}}\\
+\pmb{V[\text{e$\_$}]\text{:=}\text{Comm}[X,\alpha [e]]}\\
+\pmb{}\\
+\pmb{\text{V1}=V[\text{e1}]\text{//}\text{Simplify};}\\
+\pmb{\text{V2}=V[\text{e2}]\text{//}\text{Simplify};}\)
+\end{doublespace}
+
+\section*{Equations Characterizing the Triple Reduced Product}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \mu  \text{is} \text{Real}, \text{Skew}, \text{and} \text{Symmetric} \text{*)}}\\
+\pmb{\text{(* LAM  and NU are constant matrices in the original problem *)}}\\
+\pmb{\text{(* Later we will specify $\lambda $s and $\nu $s to compute specific solutions*)}}\\
+\pmb{}\\
+\pmb{\text{MU}\text{:=}I \text{DiagonalMatrix}[\{\mu [1], \mu [2], \mu [3]\}]; \text{(* I$\mu $ in paper *)}}\\
+\pmb{\text{LAM}=I \text{DiagonalMatrix}[\{\text{$\lambda $1},\text{$\lambda $2},\text{$\lambda $3}\}]; \text{(* I$\lambda $ in paper *)}}\\
+\pmb{\text{NU} = I \text{DiagonalMatrix}[\{\text{$\nu $1},\text{$\nu $2},\text{$\nu $3}\}]; }\\
+\pmb{\text{(* I$\nu $ in paper *)}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{$\S $2}.2: \text{$\tau $2} \text{is} \text{the} \text{second} \text{elementary} \text{symetric} \text{polynomial}
+\tau _2(X) \text{*)}}\\
+\pmb{\text{$\tau $2}[\text{X$\_$}] \text{:=} \text{Coefficient}[\text{Det}[X- z \text{IdentityMatrix}[3]], z]}\\
+\pmb{}\\
+\pmb{\text{(* Quality of life function simplifying difference between common $\tau $2 evaluations*)}}\\
+\pmb{\text{$\tau $diff}=\text{$\tau $2}[-X-\text{MU}]-\text{$\tau $2}[-X];}\\
+\pmb{\text{(* Quality of life function simplifying difference between common Det evaluations*)}}\\
+\pmb{\text{detsum}=\text{Det}[-X - \text{MU}] + \text{Det}[X];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(* Equations characterizing the triple reduced product *)}}\\
+\pmb{\text{eqn1}\text{:=}I(\text{detsum}-\text{Det}[\text{NU}]-\text{Det}[\text{LAM}])\text{//}\text{ComplexExpand};}\\
+\pmb{\text{eqn2}\text{:=}I(\text{Det}[X]-\text{Det}[\text{LAM}])\text{//}\text{ComplexExpand};}\\
+\pmb{\text{eqn3}\text{:=}\text{$\tau $2}[X]-\text{$\tau $2}[\text{LAM}]\text{//}\text{ComplexExpand};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{Equations} \text{above} \text{but} \text{with} \text{variables} \text{unexpanded}, \text{useful} \text{later}\text{*)}}\\
+\pmb{\text{EQN1}=I \text{detsum}-\text{DetNL}\text{//}\text{Simplify};}\\
+\pmb{\text{EQN2}=I \text{Det}[X]-\text{DetL}\text{//}\text{Simplify};}\\
+\pmb{\text{EQN3}=\text{$\tau $2}[X]-\text{$\tau $L}\text{//}\text{Simplify};}\)
+\end{doublespace}
+
+\section*{Evaluating the Variables and Replacing \(p^2\)}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} }\\
+\pmb{\text{Much} \text{of} \text{the} \text{subsequent} \text{code} \text{is} \text{computing} \text{and} \text{applying} \text{replacement} \text{rules}.}\\
+\pmb{\text{For} \text{clarity} \text{we} \text{try} \text{to} \text{encode} \text{the} \text{main} \text{replacement} \text{rules} \text{as} \text{functions}.}\\
+\pmb{\text{The} \text{replacement} \text{functions} \text{will} \text{be} \text{denoted} \text{by} \text{{``}Sub{''}}.}\\
+\pmb{\text{The} \text{variable} \text{being} \text{replaced} \text{will} \text{prefix} \text{{``}Sub{''}}.}\\
+\pmb{\text{The} \text{variables} \text{replacing} \text{will} \text{suffix} \text{{``}Sub{''}}.}\\
+\pmb{}\\
+\pmb{\text{We} \text{apply} \text{replacement} \text{functions} \text{by} \text{suffix} \text{denoted} \text{//}}\\
+\pmb{\text{for} \text{example}: (x \text{//} \text{xSuby}) \to  y}\\
+\pmb{\text{*)}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{pSubrq} \text{eliminates} p{}^{\wedge}2 \text{in} \text{terms} \text{of} r^2-q^2\text{*)}}\\
+\pmb{\text{(*} \text{Note} \text{that} \text{rr}, \text{uu}, \text{xx} \text{will} \text{denote} r{}^{\wedge}2, u{}^{\wedge}2, x{}^{\wedge}2 \text{*)}}\\
+\pmb{\text{(*} \text{Note} \text{that} \text{only} p{}^{\wedge}2 \text{terms} \text{will} \text{be} \text{replaced}. \text{There} \text{may} \text{still}
+\text{be} p \text{terms} \text{in} \text{the} \text{expression} \text{after} }\\
+\pmb{\text{substitution} \text{*)}}\\
+\pmb{\text{pSubrq}\text{:=}\#\text{/.}p{}^{\wedge}2\text{-$>$}\text{rr}-q{}^{\wedge}2\&}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{Equations} \text{with} \text{variables} \text{replaced} \text{and} \text{expanded}}\\
+\pmb{\text{replacement} \text{variables} \text{are} \text{denoted} \text{by} \text{suffix}\text{*)}}\\
+\pmb{}\\
+\pmb{\{\text{eqn1rq},\text{eqn2rq},\text{eqn3rq}\}=\{\text{eqn1},\text{eqn2},\text{eqn3}\}\text{//}\text{pSubrq}\text{//}\text{Simplify};}\\
+\pmb{\{\text{EQN1rq},\text{EQN2rq},\text{EQN3rq}\}=\{\text{EQN1},\text{EQN2},\text{EQN3}\}\text{//}\text{pSubrq}\text{//}\text{Simplify};}\)
+\end{doublespace}
+
+\section*{Solving the Equations By Replacing to pqrc}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{See} \text{$\S $2}.2 \text{eqs}. 11,12,13 \text{*)}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*Restrict to the transversal*)}}\\
+\pmb{v=0;}\\
+\pmb{y=x;}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{}}\\
+\pmb{\text{(*Find replacement rules for equation solution*)}}\\
+\pmb{\text{uurule} = \text{Solve}[(\text{Expand}[\mu [1]\text{EQN3rq} + \text{EQN1rq}]\text{/.}u{}^{\wedge}2\text{-$>$}\text{uu})\text{==}0,\text{uu}];}\\
+\pmb{\text{xxrule} = \text{Solve}[(\text{Expand}[\mu [2]\text{EQN3rq} + \text{Expand}[\text{EQN1rq}]]\text{/.}x{}^{\wedge}2\text{-$>$}\text{xx})\text{==}0,\text{xx}];}\\
+\pmb{}\\
+\pmb{\text{(*}\text{Solving} \text{for} \text{substitution} \text{rules} \text{for} a,b \text{in} \text{terms} \text{of} c\text{*)}}\\
+\pmb{\text{arule}=\text{Solve}[\text{$\tau $diff} - (\mu [1]+\mu [3])(a+b+c)==\text{$\tau $NL},a];}\\
+\pmb{\text{brule}=\text{Solve}[\text{$\tau $diff} - (\mu [2]+\mu [3])(a+b+c)==\text{$\tau $NL},b];}\\
+\pmb{}\\
+\pmb{\text{(*Replacement rules for our variables*)}}\\
+\pmb{\text{uxrules}=\text{Flatten}[\{u{}^{\wedge}2\text{-$>$}\text{uu},x{}^{\wedge}2\text{-$>$}\text{xx},\text{uurule},\text{xxrule}\}];}\\
+\pmb{\text{abrules}=\text{Flatten}[\{\text{arule},\text{brule}\}];}\\
+\pmb{}\\
+\pmb{}\\
+\pmb{\text{(*}\text{Function} \text{for} \text{replacing} \text{in} \text{terms} \text{of} r,c,p,q\text{*)}}\\
+\pmb{\text{uxabSubpqrc}\text{:=}\#\text{//.}\text{Flatten}[\{\text{uxrules},\text{abrules}\}]\&}\)
+\end{doublespace}
+
+\section*{EQN*}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} }\\
+\pmb{\text{EQNpqrc} \text{is} \text{EQN} \text{with} \text{all} \text{the} \text{above} \text{replacement} \text{rules} \text{applied} \text{so}
+\text{that} \text{we} \text{get} \text{an} \text{equation} \text{in} \text{terms} \text{of} p,q,r,c}\\
+\pmb{\text{*)}}\\
+\pmb{}\\
+\pmb{\{\text{EQN1pqrc},\text{EQN2pqrc},\text{EQN3pqrc}\}=\{\text{EQN1rq},\text{EQN2rq},\text{EQN3rq}\}\text{//}\text{uxabSubpqrc}\text{//}\text{Simplify};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{UUrc}=\text{Expand}[\text{uurule}\text{//.}\text{abrules}]\text{//}\text{Simplify}\text{//}\text{Flatten};}\\
+\pmb{\text{XXrc}=\text{Expand}[\text{xxrule}\text{//.}\text{abrules}]\text{//}\text{Simplify}\text{//}\text{Flatten};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{uuxxrules}=\text{Flatten}[\{u\text{-$>$}\text{Sqrt}[\text{uu}\text{/.}\text{UUrc}],x\text{-$>$}\text{Sqrt}[\text{xx}\text{/.}\text{XXrc}]\}];}\\
+\pmb{\text{uuxxSubrc}\text{:=}\#\text{//.}\{u\text{-$>$}\text{Sqrt}[\text{uu}\text{/.}\text{UUrc}],x\text{-$>$}\text{Sqrt}[\text{xx}\text{/.}\text{XXrc}]\}\&}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{EQN2rc}= \text{EQN2pqrc}\text{//}\text{uuxxSubrc};}\)
+\end{doublespace}
+
+\section*{Replacing p q with r c}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(* This block will not evaluate unless F is undefined *)}}\\
+\pmb{\text{Clear}[F]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{  }\text{(*} p+q = F; p{}^{\wedge}2+q{}^{\wedge}2 = r{}^{\wedge}2}\\
+\pmb{\text{   }p{}^{\wedge}2 +(F-p){}^{\wedge}2 = r{}^{\wedge}2}\\
+\pmb{2p{}^{\wedge}2 - 2\text{Fp} +F{}^{\wedge}2 - r{}^{\wedge}2 = 0}\\
+\pmb{\text{   }\text{Discriminant} \text{as} a \text{quadratic} \text{in} p \text{is} 4F{}^{\wedge}2 - 8(F{}^{\wedge}2-r{}^{\wedge}2) = 8r{}^{\wedge}2
+- 4F{}^{\wedge}2 = 4(2r{}^{\wedge}2-F{}^{\wedge}2) }\\
+\pmb{\text{   }\text{To} \text{get} \text{soln} \text{for} \{p,q\} \text{need} \text{this} \text{discriminant} \text{positive}, \text{so} \text{boundary}
+\text{of} \text{the} \text{manifold}}\\
+\pmb{\text{   }\text{is} \text{where} \text{the} \text{discriminant} \text{is} 0 \text{*)}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*finding p and q in terms of rr and c*)}}\\
+\pmb{\text{(*} \text{The} \text{line} p+q = F \text{intersects} \text{the} \text{circle} p{}^{\wedge}2+q{}^{\wedge}2 = r{}^{\wedge}2 \text{in} \text{two}
+\text{points}.}\\
+\pmb{\text{So} \text{for} \text{fixed} \left|r|^2 \text{as} c \text{varies} \text{our} \text{crossection} \text{is} \text{the} \text{union} \text{of}
+\text{two} \text{curves}\right., \text{see} \text{Lemma} 2.3.}\\
+\pmb{\text{However}, }\\
+\pmb{\text{when} \text{we} \text{do} \text{integrals} \text{to} \text{find} \text{the} \text{period} \text{we} \text{need} \text{only} \text{integrate}
+\text{over} \text{one} \text{of} \text{the} \text{two} \text{curves} \text{then} \text{double}.}\\
+\pmb{\text{The} \text{//}\text{First} \text{suffix} \text{makes} \text{the} \text{arbitrary} \text{choice} \text{of} \text{one} \text{of} \text{the}
+\text{two} \text{curves} \text{to} \text{integrate}. \text{*)}}\\
+\pmb{\text{pqrulerc} = \text{Simplify}[\text{Solve}[\{p+q\text{==}F,p{}^{\wedge}2+q{}^{\wedge}2\text{==}\text{rr}\},\{p,q\}]]\text{//}\text{First};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\{\text{prc},\text{qrc}\}=\{p,q\}\text{/.}\text{pqrulerc};}\\
+\pmb{\text{pqSubrc}\text{:=}\#\text{//.}\{p\to \text{prc},q\to \text{qrc}\}\&}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(* seq is EQN2 *)}}\\
+\pmb{\text{seq}=\text{Simplify}[\text{EQN2rc}];}\\
+\pmb{}\\
+\pmb{g=\text{Coefficient}[\text{seq},p];}\\
+\pmb{f=\text{seq}-p g-q g;}\\
+\pmb{}\\
+\pmb{ \text{(*} \text{The} \text{equation} F=f/g \text{is} \text{equivalent} \text{to} \text{seq}=0\text{*)}}\\
+\pmb{F=-f/g;}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{Subrc}, \text{with} \text{no} \text{prefix}, \text{defines} \text{the} \text{full} \text{replacement} \text{function}
+\text{to} \text{terms} \text{rr},c \text{*)}}\\
+\pmb{\text{Subrc}\text{:=}(\#\text{//}\text{uxabSubpqrc}\text{//}\text{uuxxSubrc}\text{//}\text{pqSubrc})\&}\)
+\end{doublespace}
+
+\section*{The Original Matrix in rr, c}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*Rewrite All Entries of X in terms of r and c*)}}\\
+\pmb{\text{Xrc}=X\text{//}\text{Subrc};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{Partial} \text{Derivatives} \text{of} X \text{wrt} c \text{and} r^2\text{*)}}\\
+\pmb{\text{dcXrc} = D[\text{Xrc},c];}\\
+\pmb{\text{dkXrc} = D[\text{Xrc},\text{rr}];}\)
+\end{doublespace}
+
+\section*{The Symmetrized Gelfand-Cetlin Function}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{  }\text{(*} \text{GC} \text{is} \text{the} \text{Gelfand}-\text{Cetlin} \text{function} \text{*)}}\\
+\pmb{\text{GC}[\text{M$\_$}]\text{:=}I M[[1,1]]+\text{Sqrt}[-\text{Expand}[(M[[2,2]]-M[[3,3]]){}^{\wedge}2 + 4 M[[2,3]]M[[3,2]]]]}\\
+\pmb{}\\
+\pmb{\text{  }\text{(*} \text{this} \text{is} \text{the} \text{input} \text{function}, \text{the} \text{average} \text{of} \text{the} \text{Gelfand}-\text{Cetlin}
+\text{function} \text{--} \text{called}}\\
+\pmb{\text{   }\text{candidate}[M] \text{*)}}\\
+\pmb{\text{(*The input function in  $\S $3.3  of the paper is denoted f *)}}\\
+\pmb{\text{(*} \text{This} \text{function} \text{is} \text{treated} \text{as} a \text{candidate} \text{for} \text{the} \text{hamiltonian}. }\\
+\pmb{\text{Here} \text{it} \text{is} \text{the} \text{average} \text{Gelfand}-\text{Cetlin} \text{function}, \text{GC$\_$av} \text{*)}}\\
+\pmb{\text{candidate}[\text{M$\_$}] \text{:=} (\text{GC}[M]+\text{GC}[-M-\text{MU}])/2}\\
+\pmb{}\\
+\pmb{ \text{(*} \text{We} \text{proceed} \text{to} \text{compute} \text{the} \text{Hamiltonian} \text{associated} \text{to} \text{the} \text{circle}
+\text{action}}\\
+\pmb{\text{   }\text{associated} \text{to}\text{  }\text{this} \text{input} \text{function}. \text{as} \text{in} \text{Section} 4 \text{of} \text{the}
+\text{paper} \text{*)}}\\
+\pmb{ \text{prehh}[\text{V$\_$}]\text{:=}\text{candidate}[X + z V]}\\
+\pmb{}\\
+\pmb{\text{(*}}\\
+\pmb{\text{Directional} \text{Derivative} \text{of} \text{candidate}[V] \text{in} \text{the} \text{direction} \text{of} V.}\\
+\pmb{h[\text{V$\_$}]\text{:=}\text{Limit}[(\text{candidate}[X + z V]- \text{candidate}[X])/z,z\text{-$>$}0] \text{*)}}\\
+\pmb{h[\text{V$\_$}] \text{:=}D[\text{prehh}[V],z]\text{/.}z\text{-$>$}0}\\
+\pmb{}\\
+\pmb{\text{(*Take directional derivatives in direction of dcXrc*)}}\\
+\pmb{\text{hVH}=h[\text{dcXrc}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*Directional derivatives of candidate in the direction of V1 and V2*)}}\\
+\pmb{\{\text{hV1},\text{hV2}\}=h\text{/@}\{\text{V1},\text{V2}\}\text{//}\text{Simplify};}\\
+\pmb{}\\
+\pmb{\text{(*}\text{The} \text{directional} \text{derivative} \text{in} \text{the} \text{direction} \text{VV} \text{is} 0, \text{hence} \text{since}
+\text{we} \text{are} \text{in} 2 \text{dimensions},}\\
+\pmb{ \text{VV} \text{is} a \text{direction} \text{vector} \text{for} \text{the} \text{associated} \text{Hamiltonian} \text{vector} \text{field}
+\text{*)}}\\
+\pmb{\text{VV}=\text{hV2} \text{V1} - \text{hV1} \text{V2};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{e=\text{hV2} \text{e1}-\text{hV1} \text{e2};}\)
+\end{doublespace}
+
+\section*{Symplectic Form on Triple Reduced Product}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(* $\S $3.1 eq.25 symplectic form on triple reduced product*)}}\\
+\pmb{\hat{\Omega }= -\text{IP}[\text{dcXrc},e\text{//}\text{Simplify}];}\\
+\pmb{\text{$\Omega $rc}=\hat{\Omega }\text{//}\text{Subrc};}\)
+\end{doublespace}
+
+\section*{Change Parameters to H, c}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{Solve} \text{the} \text{Equation} H=\text{candidate}[X] \text{for} \text{rr} \text{in} \text{terms} \text{of} H \text{and}
+c\text{*)}}\\
+\pmb{\text{hrc}=\text{candidate}[X]\text{//}\text{Simplify}\text{//}\text{Subrc};}\\
+\pmb{\text{rrruleHc}=\text{Simplify}[\text{Solve}[\text{hrc}==H,\text{rr}]]\text{//}\text{Flatten}\text{//}\text{First};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{ \text{(*} \text{We} \text{now} \text{switch} \text{parameters} \text{to} H \text{and} c \text{instead} \text{of} \text{rr} \text{and}
+c}\\
+\pmb{\text{Any} \text{variable} \text{with} \text{the} \text{suffix} \text{Hc} \text{indicates} \text{replacment} \text{to} \text{terms} \text{in}
+H \text{and} c \text{*)}}\\
+\pmb{\text{uuruleHc} = \text{Simplify}[\text{UUrc}\text{/.}\text{rrruleHc}];}\\
+\pmb{}\\
+\pmb{\text{(*} \text{Replacement} \text{function} \text{to} \text{terms} \text{in} H,c \text{*)}}\\
+\pmb{\text{SubHc}\text{:=}(\#\text{//}\text{Subrc})\text{//.}\text{rrruleHc}\&}\\
+\pmb{}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{seqHc} = \text{seq}\text{//}\text{SubHc};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{boundarycubic} = 2\text{rr} g{}^{\wedge}2 - f{}^{\wedge}2;}\\
+\pmb{\text{boundaryHc}=\text{boundarycubic}\text{//}\text{SubHc};}\)
+\end{doublespace}
+
+\section*{Specific Values}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{Here} \text{we} \text{introduce} \text{specific} \text{values} \text{for} \lambda 's, \mu 's, \text{and} \nu 's.
+}\\
+\pmb{\text{This} \text{enables} \text{us} \text{to} \text{compute} \text{results} \text{numerically} \text{which} \text{are} \text{not} \text{possible}
+\text{for} \text{Mathematica} \text{algebraically} \text{*)}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(* We denote variables with specific values with a foremost prefix {``}s{''} *)}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{$\S $4}.1\text{  }\text{In} \text{the} \text{paper} \text{these} \text{are} \text{referred} \text{to} \text{as} '\text{generic}
+\text{constants}' \text{*)}}\\
+\pmb{\text{s$\lambda $}=\text{LAM}\text{/.}\{\text{$\lambda $1}\to  -7/2,\text{$\lambda $2}\to 3,\text{$\lambda $3}\to 1/2\};}\\
+\pmb{\text{s$\mu $}=\{\mu [1]\to 3,\mu [2]\to 0,\mu [3]\to -3\};}\\
+\pmb{\text{s$\nu $}=\text{NU}\text{/.}\{\text{$\nu $1}\to -11/2,\text{$\nu $2}\to 4,\text{$\nu $3}\to 3/2\};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(* Here we define how the unexpanded variables relate to expanded variables *)}}\\
+\pmb{\text{sDetNL}[\nu \_,\lambda \_]\text{:=}I(\text{Det}[\nu ]+\text{Det}[\lambda ]);}\\
+\pmb{\text{sDetL}[\lambda \_]\text{:=}I \text{Det}[\lambda ];}\\
+\pmb{\text{s$\tau $}[\lambda \_]\text{:=}\text{$\tau $2}[\lambda ];}\\
+\pmb{\text{s$\tau $NL}[\nu \_,\lambda \_]\text{:=}(\text{$\tau $2}[\nu ]-\text{$\tau $2}[\lambda ]);}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{specificvalues}=\{}\\
+\pmb{\text{DetL}\to \text{sDetL}[\text{s$\lambda $}],}\\
+\pmb{\text{DetNL}\to \text{sDetNL}[\text{s$\nu $},\text{s$\lambda $}],}\\
+\pmb{\text{$\tau $NL} \text{-$>$}\text{  }\text{s$\tau $NL}[\text{s$\nu $},\text{s$\lambda $}],}\\
+\pmb{\text{$\tau $L}\to \text{s$\tau $}[\text{s$\lambda $}],}\\
+\pmb{\mu [1]\to 3,\mu [2]\to 0,\mu [3]\to -3\};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(* boundaryHc with specific values for parameters*)}}\\
+\pmb{\text{Subspecifics}\text{:=}\#\text{/.}\text{specificvalues}\&;}\\
+\pmb{}\\
+\pmb{\text{sboundaryHc}=\text{boundaryHc}\text{//}\text{Subspecifics}\text{//}\text{Simplify};}\\
+\pmb{}\\
+\pmb{\text{(*} \text{rule} \text{for} \text{replacing} \text{rr} \text{to} H,c \text{terms} \text{with} \text{specific} \text{constants}, \text{quality}
+\text{of} \text{life} \text{*)}}\\
+\pmb{\text{srrrulesHc}=\text{rrruleHc}\text{//}\text{Subspecifics};}\)
+\end{doublespace}
+
+\section*{Mathematica Geometric Regions}
+
+\subsection*{Setting Up Regions}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{Rules} \text{for} \text{rr},\text{xx},\text{uu} \text{for} \text{the} \text{region} \text{in} H,c \text{to} \text{satisfy}
+\text{*)}}\\
+\pmb{\text{rrFromHc} = (\text{rrruleHc}\text{//}\text{Subspecifics});}\\
+\pmb{\text{xxFromHc} = (\text{XXrc}\text{//}\text{Subspecifics})\text{/.}\text{rrFromHc};}\\
+\pmb{\text{uuFromHc}=(\text{UUrc}\text{//}\text{Subspecifics})\text{/.}\text{rrFromHc};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{Define} \text{region} \text{sub}-\text{conditions} \text{*)}}\\
+\pmb{\text{$\mathcal{R}$rr}=\text{ImplicitRegion}[(\text{rr}\text{/.}\text{rrFromHc})>0,\{H,c\}];}\\
+\pmb{\text{$\mathcal{R}$uu}=\text{ImplicitRegion}[(\text{uu}\text{/.}\text{uuFromHc})>0,\{H,c\}];}\\
+\pmb{\text{$\mathcal{R}$xx}=\text{ImplicitRegion}[(\text{xx}\text{/.}\text{xxFromHc})>0,\{H,c\}];}\\
+\pmb{\text{$\mathcal{R}$Hc}=\text{ImplicitRegion}[\text{sboundaryHc}>0,\{H,c\}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*} \text{Final} \text{region} \text{is} \text{the} \text{interesection} \text{of} \text{all} \text{regions} \text{satisfying}
+\text{sub}-\text{conditions} \text{*)}}\\
+\pmb{\text{$\mathcal{R}$final}=\text{RegionIntersection}[\text{$\mathcal{R}$Hc},\text{$\mathcal{R}$rr},\text{$\mathcal{R}$xx},\text{$\mathcal{R}$uu}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*Discretize Region for Faster and More Consistant Integration*)}}\\
+\pmb{\text{$\mathcal{R}$finaldiscrete}=\text{DiscretizeRegion}[\text{$\mathcal{R}$final},\{\{-4,6\},\{-1,1\}\},\text{PerformanceGoal}\to \text{{``}Quality{''}},\text{AccuracyGoal}\to
+8,}\\
+\pmb{\text{PrecisionGoal}\to 8]}\)
+\end{doublespace}
+
+\includegraphics{GCav_final_gr1.eps}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*Separate Discretized Regions into Connected Components*)} }\\
+\pmb{\text{connectedregions}=\text{ConnectedMeshComponents}[\text{$\mathcal{R}$finaldiscrete}][[\text{;;}4]];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*Find the min and max of the region*)}}\\
+\pmb{\text{FindNP}\text{:=}\text{First}@\text{RegionNearest}[\#,\{-1000,0\}]\&}\\
+\pmb{\text{FindSP}\text{:=}\text{First}@\text{RegionNearest}[\#,\{1000,0\}]\&}\\
+\pmb{}\\
+\pmb{\text{(*} \text{Sort} \text{Connected} \text{Components} \text{by} \text{Sout} \text{Pole} \text{to} \text{Consistently} \text{Find} '\text{Main}'
+\text{Region} \text{*)}}\\
+\pmb{\text{connectedregions}=\text{SortBy}[\text{connectedregions},\text{FindSP}];}\\
+\pmb{\text{mainregion}=\text{connectedregions}[[4]];}\\
+\pmb{}\\
+\pmb{\text{(*}\text{North} \text{and} \text{South} H \text{Bounds} \text{for} '\text{Main}' \text{Region}\text{*)}}\\
+\pmb{\{\text{northpole},\text{southpole}\}=\{\text{FindNP}@\text{mainregion},\text{FindSP}@\text{mainregion}\}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\{3.89944,5.17858\}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{RegionPlot}@\text{ImplicitRegion}[\{H,c\}\in \text{$\mathcal{R}$final},\{\{H,\text{northpole},\text{southpole}\},\{c,0,1\}\}]}\)
+\end{doublespace}
+
+\includegraphics{GCav_final_gr2.eps}
+
+\section*{Period with Integrand: jacobian/Sqrt[snorm$\chi $Hc] }
+
+\begin{doublespace}
+\noindent\(\pmb{\text{sXrc}=\text{Xrc}\text{//}\text{Subspecifics}\text{//}\text{Simplify};}\\
+\pmb{\text{sXHc}=\text{sXrc}\text{//}\text{SubHc}\text{//}\text{Subspecifics};}\\
+\pmb{\text{sTc}=D[\text{sXHc},c];}\\
+\pmb{\text{sTH}=D[\text{sXHc},H];}\\
+\pmb{\text{snormTc}=\text{IP}[\text{sTc},\text{sTc}];}\\
+\pmb{\text{(*}\text{snormTcrc}=\text{IP}[\text{sTrc},\text{sTrc}];\text{*)}}\\
+\pmb{\text{snormTH}=\text{IP}[\text{sTH},\text{sTH}];}\\
+\pmb{\text{sTHc}=\text{IP}[\text{sTH},\text{sTc}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{sVVHc}=((\text{VV}\text{//}\text{Subrc})\text{//}\text{Subspecifics})\text{//}\text{SubHc};}\\
+\pmb{}\\
+\pmb{\text{(*} \text{For} \text{Mathematical} \text{Derivation} \text{of} \text{this} \text{formula}, \text{see} \text{Section5} \text{of} \text{{``}flowchart.tex{''}}}\\
+\pmb{\text{There} \chi  \text{is} \text{denoted} X_H \text{*)}}\\
+\pmb{ \text{(* Let $\chi $ be the Hamiltonian vector field associated to the circle action *)}}\\
+\pmb{ \text{(*} \text{So} \text{VV} = T \chi  \text{for} \text{some} T.\text{  }\text{We} \text{wish} \text{to} \text{find} T. \text{*)}}\\
+\pmb{ \text{(*} \text{Using} \text{the} \text{general} \text{formula} \text{for} \text{Hamiltonian} \text{vector} \text{fields} \text{we} \text{have}}\\
+\pmb{\text{  }\Omega (\chi , V) = \text{dH} (V) \text{where} H \text{is} \text{the} \text{Hamiltonian} \text{*)}}\\
+\pmb{ \text{(*} \text{Set} V = \partial X/\partial c, \text{which} \text{is} \text{dcXrc} \text{in} \text{this} \text{code}.}\\
+\pmb{ \text{Observe} \text{that} V \text{is} a \text{tangent} \text{vector} \text{to} \text{the} \text{manifold} \text{because} \text{we} \text{are}
+}\\
+\pmb{\text{  }\text{parametrizing} \text{the} \text{manifold} \text{by} c \text{and} \text{rr} \text{and} \text{this} \text{is} \text{the} \text{directional}
+\text{derivative} w.r.t. c \text{*)} }\\
+\pmb{ \text{(*} \text{hVH} = \text{dcXrc} = \text{omega} (\chi , \text{dcXrc}) = \Omega (\text{VV}/T,\text{dcXrc}) = \Omega /T,}\\
+\pmb{\text{noting} \text{that} \text{VH}=\text{dcXrc}.}\\
+\pmb{\text{Therefore} T = \Omega /\text{hVH} \text{and} \text{so} \chi  = \Omega /\text{hVH} \text{VV}}\\
+\pmb{ \text{*)}\text{  }}\\
+\pmb{\chi =\text{hVH}\left/\hat{\Omega }\right. \text{VV};}\\
+\pmb{\text{s$\chi $} = \chi \text{//}\text{Subspecifics};}\\
+\pmb{\text{s$\chi $rc}=(\text{s$\chi $}\text{//}\text{Subrc})\text{//}\text{Subspecifics};}\\
+\pmb{\text{snorm$\chi $rc}=\text{IP}[\text{s$\chi $rc},\text{s$\chi $rc}]\text{//}\text{Subspecifics};}\\
+\pmb{\text{snorm$\chi $Hc}=(\text{snorm$\chi $rc}\text{//}\text{SubHc})\text{//}\text{Subspecifics};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{jacobian}=\text{Sqrt}[\text{Det}[\{\{\text{snormTc},\text{sTHc}\},\{\text{sTHc},\text{snormTH}\}\}]];}\\
+\pmb{}\\
+\pmb{\text{integrand}=(\text{jacobian}/\text{Sqrt}[\text{snorm$\chi $Hc}]);}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{Calculate} \text{period} \text{along} H=z \text{with} \text{above} \text{integrand}\text{*)}}\\
+\pmb{\text{Period$\chi $}[\text{z$\_$}]\text{:=}\text{NIntegrate}[\text{integrand}\text{/.}H\to z,\{H,c\}\in \text{ImplicitRegion}[\{H,c\}\in \text{$\mathcal{R}$final}\&\&H==z,\{H,c\}]]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{(*}\text{Table} \text{of} \text{Half}-\text{Periods} \text{with} \text{Above} \text{Integrand} \text{with} z=H \text{from}
+\text{SP} \text{to} \text{NP} \text{in} \text{main} \text{region}\text{*)}}\\
+\pmb{\text{(* This generates the Table 1 $\S $4.1 *)}}\\
+\pmb{\text{Table}[\{z,\text{Period$\chi $}[z]\},\{z,\text{southpole}-0.1,\text{northpole},-0.1\}]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\{\{5.07858,5.83862\},\{4.97858,5.07163\},\{4.87858,4.64813\},\{4.77858,4.57605\},\{4.67858,4.8062\},\{4.57858,4.97467\},\{4.47858,3.57818\},\{4.37858,2.78557\},\{4.27858,2.28502\},\{4.17858,1.94104\},\{4.07858,1.69484\},\{3.97858,1.52715\}\}\)
+\end{doublespace}
+
+\end{document}
